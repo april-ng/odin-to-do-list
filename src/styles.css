@@ -1,0 +1,662 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+/* ============================================================
+   CSS VARIABLES
+   ============================================================ */
+:root {
+  /* Divider */
+  --divider: rgba(145, 158, 171, 0.2);
+
+  /* Text */
+  --text-primary: #1e252d;
+  --text-secondary: #667380;
+
+  /* Action */
+  --action-active: #637381;
+  --action-hovered-bg: rgba(99, 115, 129, 0.08);
+  --action-disabled-bgcolor: rgba(145, 158, 171, 0.2);
+  --action-disabled: rgba(145, 158, 171, 0.8);
+
+  /* Primary */
+  --primary-main: #3b8de7;
+
+  /* Success */
+  --success-main: #5ec16a;
+  --success-hovered-bg: rgba(94, 193, 106, 0.08);
+
+  /* Chip */
+  --chip-default-bg: rgba(145, 158, 171, 0.08);
+  --chip-low-bg: rgba(142, 51, 255, 0.16);
+  --chip-low-text: #5119b7;
+  --chip-medium-bg: rgba(255, 171, 0, 0.16);
+  --chip-medium-text: #b76e00;
+  --chip-high-bg: rgba(255, 86, 48, 0.16);
+  --chip-high-text: #b71d18;
+
+  /* Global inherit (sidebar) */
+  --global-inherit-hovered-bg: #5119b7;
+  --global-inherit-active-bg: #1c252e;
+  --global-inherit-default: #ffffff;
+
+  /* Error */
+  --error-main: #ff5630;
+  --error-dark: #b71d18;
+
+  /* Modal backdrop */
+  --backdrop: rgba(0, 0, 0, 0.64);
+
+  /* Layout */
+  --sidebar-width: 240px;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  background-color: #f4f6f8;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+#app {
+  display: flex;
+  height: 100vh;
+}
+
+#sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background-color: var(--global-inherit-active-bg);
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#main-content {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 40px 48px;
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 16px 8px;
+  color: var(--global-inherit-default);
+}
+
+.sidebar-header .app-logo {
+  width: 32px;
+  height: 32px;
+  background-color: var(--primary-main);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.sidebar-header .company-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--global-inherit-default);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 8px;
+}
+
+.sidebar-user .user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.sidebar-user .user-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--global-inherit-default);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 8px 16px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-section-label button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  border-radius: 4px;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+.sidebar-section-label button:hover {
+  background-color: var(--action-hovered-bg);
+  color: var(--global-inherit-default);
+}
+
+/* Nav item */
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px 6px 16px;
+  border-radius: 8px;
+  margin: 1px 8px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+  user-select: none;
+}
+
+.nav-item:hover {
+  background-color: var(--action-hovered-bg);
+  color: var(--global-inherit-default);
+}
+
+.nav-item:hover .nav-item-actions {
+  opacity: 1;
+}
+
+.nav-item.active {
+  background-color: var(--action-hovered-bg);
+  color: var(--global-inherit-default);
+}
+
+.nav-item-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 0;
+}
+
+.nav-item-left .nav-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--primary-main);
+  flex-shrink: 0;
+}
+
+.nav-item-left span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+
+.nav-item-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  border-radius: 4px;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+.nav-item-actions button:hover {
+  background-color: var(--action-hovered-bg);
+  color: var(--global-inherit-default);
+}
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+.list-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+/* ============================================================
+   TASK CARD
+   ============================================================ */
+.task-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background-color: #fff;
+  border-bottom: 1px solid var(--divider);
+  transition: background-color 0.15s;
+}
+
+.task-card:first-child {
+  border-radius: 8px 8px 0 0;
+}
+
+.task-card:last-of-type {
+  border-radius: 0 0 8px 8px;
+  border-bottom: none;
+}
+
+.task-card:only-of-type {
+  border-radius: 8px;
+  border-bottom: none;
+}
+
+.task-card:hover {
+  background-color: #fafafa;
+}
+
+.task-card:hover .task-actions {
+  opacity: 1;
+}
+
+/* Checkbox / complete button */
+.task-complete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 1px;
+  color: var(--action-active);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: color 0.15s;
+  border-radius: 50%;
+}
+
+.task-complete-btn:hover {
+  color: var(--success-main);
+  background-color: var(--success-hovered-bg);
+}
+
+.task-complete-btn.completed {
+  color: var(--success-main);
+}
+
+/* Task body */
+.task-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.task-description {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.task-date {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   CHIP
+   ============================================================ */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: var(--chip-default-bg);
+  color: var(--text-secondary);
+}
+
+.chip.low {
+  background-color: var(--chip-low-bg);
+  color: var(--chip-low-text);
+}
+
+.chip.medium {
+  background-color: var(--chip-medium-bg);
+  color: var(--chip-medium-text);
+}
+
+.chip.high {
+  background-color: var(--chip-high-bg);
+  color: var(--chip-high-text);
+}
+
+/* ============================================================
+   TASK ACTIONS
+   ============================================================ */
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+
+.task-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--action-active);
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 6px;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+.task-actions button:hover {
+  background-color: var(--action-hovered-bg);
+}
+
+.task-actions button.delete:hover {
+  color: var(--error-main);
+}
+
+/* ============================================================
+   ADD TASK BUTTON
+   ============================================================ */
+.add-task-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  border-radius: 8px;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+.add-task-btn:hover {
+  background-color: var(--action-hovered-bg);
+  color: var(--text-primary);
+}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+#modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--backdrop);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#modal-overlay.hidden {
+  display: none;
+}
+
+.modal {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  width: 480px;
+  max-width: calc(100vw - 32px);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+/* ============================================================
+   FORM ELEMENTS
+   ============================================================ */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.form-group input,
+.form-group textarea {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  background-color: #fff;
+  border: 1px solid var(--divider);
+  border-radius: 8px;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--primary-main);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Radio group for priority */
+.radio-group {
+  display: flex;
+  gap: 12px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.radio-option input[type="radio"] {
+  accent-color: var(--primary-main);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.radio-option.low {
+  color: var(--chip-low-text);
+}
+.radio-option.medium {
+  color: var(--chip-medium-text);
+}
+.radio-option.high {
+  color: var(--chip-high-text);
+}
+
+/* Form actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition:
+    opacity 0.15s,
+    background-color 0.15s;
+}
+
+.btn:disabled {
+  background-color: var(--action-disabled-bgcolor);
+  color: var(--action-disabled);
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: var(--primary-main);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.btn-secondary {
+  background-color: var(--action-hovered-bg);
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: rgba(99, 115, 129, 0.16);
+}
+
+.btn-danger {
+  background-color: var(--chip-high-bg);
+  color: var(--error-dark);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: rgba(255, 86, 48, 0.24);
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  color: var(--text-secondary);
+  text-align: center;
+  gap: 8px;
+}
+
+.empty-state svg {
+  opacity: 0.3;
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  font-size: 14px;
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--divider);
+  border-radius: 3px;
+}
