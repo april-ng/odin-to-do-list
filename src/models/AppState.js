@@ -11,11 +11,11 @@ const AppState = {
     const saved = localStorage.getItem("appState");
     if (saved) {
       const parsed = JSON.parse(saved);
-      this.lists = parsed.lists.map(List.fromJSON);
-      this.tasks = parsed.tasks.map(Task.fromJSON);
+      this.lists = parsed.lists.map((l) => List.fromJSON(l));
+      this.tasks = parsed.tasks.map((t) => Task.fromJSON(t));
     } else {
-      this.lists = defaultLists.map(List.fromJSON);
-      this.tasks = defaultTasks.map(Task.fromJSON);
+      this.lists = defaultLists.map((l) => List.fromJSON(l));
+      this.tasks = defaultTasks.map((t) => Task.fromJSON(t));
       this.save();
     }
   },

@@ -52,7 +52,10 @@ function createNavItem(
 
   deleteBtn.addEventListener("click", (e) => {
     e.stopPropagation();
-    onDeleteList(list.id);
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${list.name}"? All tasks in this list will be deleted too.`,
+    );
+    if (confirmed) onDeleteList(list.id);
   });
 
   actions.appendChild(editBtn);
@@ -74,8 +77,8 @@ function render(
   onEditList,
   onDeleteList,
 ) {
-  const sidebar = document.getElementById("sidebar");
-  sidebar.innerHTML = "";
+  const navList = document.getElementById("nav-list");
+  navList.innerHTML = "";
 
   // Section header
   const sectionLabel = document.createElement("div");
@@ -91,7 +94,7 @@ function render(
 
   sectionLabel.appendChild(labelText);
   sectionLabel.appendChild(addBtn);
-  sidebar.appendChild(sectionLabel);
+  navList.appendChild(sectionLabel);
 
   // Nav items
   AppState.lists.forEach((list) => {
@@ -102,7 +105,7 @@ function render(
       onEditList,
       onDeleteList,
     );
-    sidebar.appendChild(item);
+    navList.appendChild(item);
   });
 }
 
