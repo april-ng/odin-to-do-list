@@ -58,6 +58,9 @@ function render(listId, onAddTask, onEditTask, onDeleteTask, onToggleComplete) {
   if (tasks.length === 0) {
     main.appendChild(createEmptyState());
   } else {
+    const taskContainer = document.createElement("div");
+    taskContainer.classList.add("task-container");
+
     tasks.forEach((task) => {
       const card = createTaskCard(
         task,
@@ -65,8 +68,10 @@ function render(listId, onAddTask, onEditTask, onDeleteTask, onToggleComplete) {
         onDeleteTask,
         onToggleComplete,
       );
-      main.appendChild(card);
+      taskContainer.appendChild(card);
     });
+
+    main.appendChild(taskContainer);
   }
 
   // Add task button

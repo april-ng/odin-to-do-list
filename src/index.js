@@ -2,6 +2,8 @@ import "./styles.css";
 import AppState from "./models/AppState.js";
 import * as Sidebar from "./components/Sidebar.js";
 import * as TaskList from "./components/TaskList.js";
+import * as TaskForm from "./components/TaskForm.js";
+import * as ListForm from "./components/ListForm.js";
 
 let activeListId = null;
 
@@ -14,24 +16,33 @@ function renderAll() {
       renderAll();
     },
     // WHEN "+" is clicked
-    () => console.log("add list clicked"),
+    () =>
+      ListForm.open({
+        onSave: renderAll,
+      }),
     // WHEN edit is clicked
-    (list) => console.log("edit list clicked", list),
-    // WHEN delete is clicked
-    (listId) => {
-      AppState.deleteList(listId);
-      if (activeListId === listId) activeListId = null;
-      renderAll();
-    },
+    (list) =>
+      ListForm.open({
+        list,
+        onSave: renderAll,
+      }),
   );
 
   if (activeListId) {
     TaskList.render(
       activeListId,
       // WHEN add task is clicked
-      () => console.log("add task clicked"),
+      () =>
+        TaskForm.open({
+          listId: activeListId,
+          onSave: renderAll,
+        }),
       // WHEN edit task is clicked
-      (task) => console.log("edit task clicked", task),
+      (task) =>
+        TaskForm.open({
+          task,
+          onSave: renderAll,
+        }),
       // WHEN delete task is clicked
       (taskId) => {
         AppState.deleteTask(taskId);
